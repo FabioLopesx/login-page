@@ -1,103 +1,174 @@
+"use client";
 import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { Eye, EyeClosed, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const formSchema = z.object({
+  email: z
+    .string()
+    .email({
+      message: "Email inválido",
+    })
+    .min(1, {
+      message: "Email é obrigatório",
+    }),
+  password: z
+    .string()
+    .min(6, {
+      message: "Senha deve ter pelo menos 6 caracteres",
+    })
+    .max(12, {
+      message: "Senha não pode ter mais que 12 caracteres",
+    }),
+});
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const router = useRouter();
+  async function onSubmitLogin(data: { email: string; password: string }) {
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      console.log(result);
+
+      if (!res.ok) {
+        alert(result.error || "Erro no login");
+      } else {
+        alert("Login bem-sucedido!");
+        router.push(`/${result.user.id}`); // ✅ redireciona para a página do usuário
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Erro na requisição");
+    }
+  }
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  return (
+    <div className="flex min-h-screen items-center justify-center md:flex-row p-2">
+      <div className="w-full max-w-7xl shadow-2xl shadow-black grid grid-cols-1 md:grid-cols-2">
+        {/* LADO ESQUERDO */}
+        <div className="relative h-full min-h-[400px] md:min-h-[650px] bg-cover">
+          <Image
+            src="/backgroud2.png"
+            alt="Background Image"
+            layout="fill"
+            objectFit="cover"
+          />
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4">
+            <h2 className="text-3xl font-semibold drop-shadow-lg text-purple-700">
+              Bem-vindo de volta!
+            </h2>
+            <p className="text-purple-700 text-lg drop-shadow-md">
+              Estamos felizes em vê-lo novamente.
+            </p>
+            <p className="text-purple-700">Faça login para continuar.</p>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* LADO DIREITO */}
+        <div className="flex items-center justify-center bg-green-100 min-h-[400px] md:min-h-[650px] p-8">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmitLogin)}
+              className="space-y-5 w-full max-w-md"
+            >
+              <h1 className="text-2xl font-semibold text-center">Login</h1>
+              {/* email */}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <Mail
+                          className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
+                          size={18}
+                        />
+                        <Input
+                          type="email"
+                          placeholder="E-mail"
+                          className="pl-10"
+                          {...field}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* senha */}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        {showPassword ? (
+                          <Eye
+                            className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 cursor-pointer"
+                            onClick={() => setShowPassword(false)}
+                            size={18}
+                          />
+                        ) : (
+                          <EyeClosed
+                            className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 cursor-pointer"
+                            onClick={() => setShowPassword(true)}
+                            size={18}
+                          />
+                        )}
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Senha"
+                          className="pl-10"
+                          {...field}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button
+                type="submit"
+                className="w-full bg-purple-600 hover:bg-purple-900"
+              >
+                Entrar na minha lista
+              </Button>
+            </form>
+          </Form>
+        </div>
+      </div>
     </div>
   );
 }
