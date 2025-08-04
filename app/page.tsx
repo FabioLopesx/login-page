@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Eye, EyeClosed, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const formSchema = z.object({
   email: z
@@ -97,9 +98,11 @@ export default function Home() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmitLogin)}
-              className="space-y-5 w-full max-w-md"
+              className="space-y-5 w-full max-w-md "
             >
-              <h1 className="text-2xl font-semibold text-center">Login</h1>
+              <h1 className="text-2xl font-semibold text-center text-purple-700">
+                Login
+              </h1>
               {/* email */}
               <FormField
                 control={form.control}
@@ -109,13 +112,13 @@ export default function Home() {
                     <FormControl>
                       <div className="relative">
                         <Mail
-                          className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
+                          className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 hover:text-purple-600"
                           size={18}
                         />
                         <Input
                           type="email"
                           placeholder="E-mail"
-                          className="pl-10"
+                          className="pl-10 "
                           {...field}
                         />
                       </div>
@@ -132,16 +135,16 @@ export default function Home() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <div className="relative">
+                      <div className="relative ">
                         {showPassword ? (
                           <Eye
-                            className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 cursor-pointer"
+                            className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 cursor-pointer hover:text-purple-600"
                             onClick={() => setShowPassword(false)}
                             size={18}
                           />
                         ) : (
                           <EyeClosed
-                            className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 cursor-pointer"
+                            className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 cursor-pointer hover:text-purple-600"
                             onClick={() => setShowPassword(true)}
                             size={18}
                           />
@@ -158,13 +161,27 @@ export default function Home() {
                   </FormItem>
                 )}
               />
-
+              <Link
+                href="/"
+                className="float-right text-purple-600 hover:underline text-xs"
+              >
+                Esqueceu sua senha?
+              </Link>
               <Button
                 type="submit"
                 className="w-full bg-purple-600 hover:bg-purple-900"
               >
                 Entrar na minha lista
               </Button>
+              <p className="text-center text-sm text-gray-500 mt-4">
+                Não tem uma conta?{" "}
+                <Link
+                  href="/cadastro"
+                  className="text-purple-600 hover:underline"
+                >
+                  Cadastre-se
+                </Link>
+              </p>
             </form>
           </Form>
         </div>
