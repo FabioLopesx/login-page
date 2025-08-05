@@ -61,7 +61,7 @@ export default function Home() {
         alert(result.error || "Erro no login");
       } else {
         alert("Login bem-sucedido!");
-        router.push(`/${result.user.id}`); // ✅ redireciona para a página do usuário
+        router.push(`/${result.user.slug}`); // ✅ redireciona para a página do usuário
       }
     } catch (err) {
       console.error(err);
