@@ -37,7 +37,7 @@ Este projeto é uma aplicação Next.js **com fluxo de autenticação**, incluin
 
 2.Instale as dependências
    npm install
-   # ou yarn
+   ou yarn
 
 3.Configure seu .env
   DATABASE_URL=...
