@@ -20,7 +20,8 @@ export default function LogoutButton() {
       }
 
       toast.success("Você saiu da conta");
-      router.push("/");
+      router.replace("/");
+      router.refresh();
     } catch (error) {
       toast.error(`${error} - Erro inesperado no logout`);
     }
