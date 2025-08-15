@@ -171,7 +171,7 @@ export default function Home() {
               </Button>
               <p className="mt-4 text-center text-sm text-gray-500">
                 Não tem uma conta?{" "}
-                <Link href="/register" className="text-black hover:underline">
+                <Link href="/register-user" className="text-black hover:underline">
                   Cadastre-se
                 </Link>
               </p>
