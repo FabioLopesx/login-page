@@ -93,11 +93,13 @@ export default function Home() {
         <div className="relative h-full min-h-[400px] bg-cover md:min-h-[650px]">
           <Image src="/backgroud2.png" alt="Background Image" layout="fill" objectFit="cover" />
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4">
-            <h2 className="text-3xl font-semibold text-black drop-shadow-lg">
+            <h2 className="text-center text-3xl font-semibold text-black drop-shadow-lg">
               Bem-vindo de volta!
             </h2>
-            <p className="text-lg text-black drop-shadow-md">Estamos felizes em vê-lo novamente.</p>
-            <p className="text-black">Faça login para continuar.</p>
+            <p className="text-center text-lg text-black drop-shadow-md">
+              Estamos felizes em vê-lo novamente.
+            </p>
+            <p className="text-center text-black">Faça login para continuar.</p>
           </div>
         </div>
 
