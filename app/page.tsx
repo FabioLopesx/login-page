@@ -53,7 +53,12 @@ export default function Home() {
         body: JSON.stringify(data),
       });
 
-      let result: any = null;
+      type LoginResponse = {
+        error?: string;
+        message?: string;
+        user?: { slug?: string };
+      };
+      let result: LoginResponse | null = null;
       try {
         result = await res.json();
       } catch {
