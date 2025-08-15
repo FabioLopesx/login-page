@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+#  Login Page — Project
 
-## Getting Started
+Este projeto é uma aplicação Next.js **com fluxo de autenticação**, incluindo tela de **login**, **cadastro**, área **dashboard privada** e funcionalidade de **alterar senha**. Usei Next.js (App Router), Prisma, JWT e Tailwind para criar uma base segura e moderna.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+##  Tecnologias usadas
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Next.js** (App Router, layouts, middleware)
+- **TypeScript**
+- **Tailwind CSS** (com gradientes e fontes customizadas)
+- **Prisma ORM** (acesso ao banco de dados)
+- **Autenticação JWT** com cookies HTTP-only
+- **Middleware** para proteger rotas privadas
+- **next/font** para usar fontes do Google (Bungee, JetBrains Mono)
+- **Toaster (sonner)** para notificações (toast) na UI
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+##  Funcionalidades
 
-## Learn More
+- Tela **Login** com validação de credenciais e emissão de token JWT  
+- Tela **Cadastro** para novos usuários  
+- **Rota privada** com dashboard, acessível apenas com token válido  
+- **Logout** que limpa o token e bloqueia o acesso com `middleware`  
+- Tela **Alterar Senha**, com verificação do usuário logado e proteção de rota  
+- **Cache-Control** e headers anti-cache para evitar acesso após logout
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+##  Como rodar localmente
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Clone o repositório  
+   ```bash
+   git clone https://github.com/FabioLopesx/login-page.git
+   cd login-page
 
-## Deploy on Vercel
+2.Instale as dependências
+   npm install
+   # ou yarn
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3.Configure seu .env
+  DATABASE_URL=...
+  JWT_SECRET=...
+  NEXT_PUBLIC_BASE_URL=http://localhost:3000
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4.Gere o cliente Prisma e atualize o DB:
+  npx prisma generate
+  npx prisma migrate dev --name init
+
+5.Rode o servidor dev:
+  npm run dev
+
+6.Acesse no navegador: http://localhost:3000
