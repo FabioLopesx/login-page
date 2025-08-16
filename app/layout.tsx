@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Bungee } from "next/font/google";
-
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 
 const bungee = Bungee({
@@ -24,6 +24,7 @@ export default function RootLayout({
       <body className={`${bungee.className} antialiased`}>
         {children}
         <Toaster position="top-center" richColors />
+        <Analytics />
       </body>
     </html>
   );
