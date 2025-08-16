@@ -86,7 +86,7 @@ function RegisterForm() {
         <div className="flex min-h-[400px] items-center justify-center bg-green-100 p-8 md:min-h-[650px]">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-md space-y-5">
-              <h1 className="text-center text-2xl font-semibold text-black">Login</h1>
+              <h1 className="text-center text-2xl font-semibold text-black">Cadastrar</h1>
               {/* nome */}
               <FormField
                 control={form.control}
